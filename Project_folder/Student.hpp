@@ -8,7 +8,8 @@ using namespace std;
 
 class QuizAttempt; // Forward declaration
 
-class Student {
+class Student 
+{
 private:
     string studentID;
     string name;
@@ -16,13 +17,14 @@ private:
     vector<QuizAttempt*> attempts; // Student references attempts
 
 public:
-    Student(string id, string name, string email);
+    Student(string id, string name, string email); // Constructor
     
-    void addAttempt(QuizAttempt* attempt);
-    string getName() const;
+    void addAttempt(QuizAttempt* attempt); // Add a quiz attempt
+    string getStudentID() const; // Get student ID
+    string getEmail() const; // Get student email
+    string getName() const; // Get student name
+    void display() const; // Display student details
     
-    // NEW: Display student info and attempts
-    void display() const;
 };
 
 #endif // STUDENT_HPP
