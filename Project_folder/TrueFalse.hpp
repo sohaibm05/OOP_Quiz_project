@@ -13,7 +13,7 @@ public:
     TrueFalse(std::string id, std::string text, float marks);
     void setCorrectAnswer(bool isTrue);
     bool checkAnswer(std::string answer) const;
-    void displayQuesion() const; // NEW
+    void displayQuestion() const; // override base virtual
 };
 
 #endif // TRUEFALSE_HPP
