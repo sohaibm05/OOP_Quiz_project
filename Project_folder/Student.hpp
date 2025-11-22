@@ -4,26 +4,27 @@
 #include <string>
 #include <vector>
 #include <iostream> // Added for display
+#include "QuizAttempt.hpp" // Include QuizAttempt header
 using namespace std;
 
 class QuizAttempt; // Forward declaration
 
 class Student 
 {
-private:
-    string studentID;
-    string name;
-    string email;
-    vector<QuizAttempt*> attempts; // Student references attempts
+    private:
+        string studentID;
+        string name;
+        string email;
+        vector<QuizAttempt*> attempts; // Student references attempts
 
-public:
-    Student(string id, string name, string email); // Constructor
-    
-    void addAttempt(QuizAttempt* attempt); // Add a quiz attempt
-    string getStudentID() const; // Get student ID
-    string getEmail() const; // Get student email
-    string getName() const; // Get student name
-    void display() const; // Display student details
+    public:
+        Student(string id, string name, string email); // Constructor
+        
+        void addAttempt(QuizAttempt* attempt); // Add a quiz attempt
+        string getStudentID() const; // Get student ID
+        string getEmail() const; // Get student email
+        string getName() const; // Get student name
+        void display() const; // Display student details
     
 };
 

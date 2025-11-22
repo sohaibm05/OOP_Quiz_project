@@ -1,25 +1,47 @@
 #include "FillInTheBlank.hpp"
 #include <algorithm>
 #include <iostream>
+using namespace std;
 
-FillInTheBlank::FillInTheBlank(std::string id, std::string text, float marks)
-    : Question(id, text, marks), correctAnswer("") {}
+FillInTheBlank::FillInTheBlank(string id, string text, float marks): Question(id, text, marks), correctAnswer("") {}
 
-void FillInTheBlank::setCorrectAnswer(std::string answer) { correctAnswer = answer; }
-
-static std::string normalize(const std::string &s) {
-    std::string r = s;
-    // trim simple spaces (front/back)
-    size_t start = r.find_first_not_of(" \t\n\r");
-    size_t end = r.find_last_not_of(" \t\n\r");
-    if (start == std::string::npos) return "";
-    r = r.substr(start, end - start + 1);
-    std::transform(r.begin(), r.end(), r.begin(), ::tolower);
-    return r;
+void FillInTheBlank::setCorrectAnswer(string answer) 
+{ 
+    correctAnswer = answer; 
 }
 
-bool FillInTheBlank::checkAnswer(std::string answer) const {
+static string normalize(const string& s) 
+{
+    int n = static_cast<int>(s.length()); // static cast here is unessary cuz our number will never be that big the reason s.length() give type size_t is to handle very large strings on 64 bit systems but here we dont need that
+    int start = 0; // Find start index (first non-whitespace)
+    while (start < n && ::isspace(static_cast< char>(s[start])))   // why use static_cast< char>? it is becaseuse the standard library functions like isspace and tolower are defined for int values that are either EOF or representable as  char. This prevents potential issues with negative char values.
+    {
+        ++start;
+    }
+    if (start >= n) // If we reached the end, string is all whitespace
+    {
+        return "";
+    }
+    int end = n - 1; // Find end index (last non-whitespace)
+    while (end >= 0 && ::isspace(static_cast< char>(s[end]))) 
+    {
+        --end;
+    }
+
+    string result; // Now [start, end] is the trimmed range (inclusive)
+    for (int i = start; i <= end; ++i)   // Step 3: Copy and convert to lowercase
+    {
+        result += (::tolower(static_cast<char>(s[i])));
+    }
+    return result;
+}
+
+bool FillInTheBlank::checkAnswer(string answer) const 
+{
     return normalize(answer) == normalize(correctAnswer);
 }
 
-void FillInTheBlank::displayQuestion() const { std::cout << questionText << std::endl; }
+void FillInTheBlank::displayQuestion() const
+{
+    cout << questionText << endl; 
+}
