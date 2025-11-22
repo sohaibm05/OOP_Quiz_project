@@ -7,7 +7,8 @@
 
 using namespace std;
 
-class NumericalQuestion : public Question {
+class NumericalQuestion : public Question 
+{
 private:
     double correctAnswer;
     double tolerance; // e.g., 0.05 for ±5%
