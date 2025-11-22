@@ -23,7 +23,7 @@ void Quiz::displayQuiz() const
     std::cout << description << std::endl;
     std::cout << "Time limit: " << timeLimit << " minutes" << std::endl;
     std::cout << "Questions:" << std::endl;
-    for (const Question* q : questions) 
+    for (const Question* q : questions) // Display each question : meaning of const Question* q is that q is a pointer to a constant Question object. This means that through the pointer q, you cannot modify the Question object it points to.
     {
         q->displayQuestion();
         std::cout << std::endl;
@@ -42,7 +42,7 @@ int Quiz::getTimeLimit() const
 { 
     return timeLimit; 
 }
-const vector<Question*>& Quiz::getQuestions() const 
+const vector<Question*>& Quiz::getQuestions() const  // & means we are returning a reference to the vector of Question pointers. This avoids copying the entire vector, which can be inefficient for large collections.
 { 
     return questions; 
 }

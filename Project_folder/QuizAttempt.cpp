@@ -4,9 +4,9 @@
 #include "Quiz.hpp"
 #include <ctime>
 #include <iostream>
+using namespace std;
 
-QuizAttempt::QuizAttempt(string id, Student* studentPtr, Quiz* quizPtr)
-    : attemptID(id), startTime(std::time(nullptr)), endTime(0), score(0.0f), student(studentPtr), quiz(quizPtr) {}
+QuizAttempt::QuizAttempt(string id, Student* studentPtr, Quiz* quizPtr): attemptID(id), startTime(time(nullptr)), endTime(0), score(0.0f), student(studentPtr), quiz(quizPtr) {}
 
 void QuizAttempt::setAnswer(Question* question, string answer) { answers[question] = answer; }
 
@@ -24,19 +24,35 @@ void QuizAttempt::submit() {
         }
     }
     score = total;
-    endTime = std::time(nullptr);
+    endTime = time(nullptr);
 }
 
-float QuizAttempt::getScore() const { return score; }
+float QuizAttempt::getScore() const 
+{ 
+    return score; 
+}
 
-string QuizAttempt::getAttemptID() const { return attemptID; }
+string QuizAttempt::getAttemptID() const 
+{ 
+    return attemptID; 
+}
 
-void QuizAttempt::display() const {
-    std::cout << "Attempt ID: " << attemptID << std::endl;
-    if (student) std::cout << "Student: " << student->getName() << " (" << student->getStudentID() << ")" << std::endl;
-    if (quiz) std::cout << "Quiz: " << quiz->getTitle() << " (" << quiz->getQuizID() << ")" << std::endl;
-    std::cout << "Score: " << score << std::endl;
-    std::cout << "Start: " << std::ctime(&startTime);
-    if (endTime != 0) std::cout << "End: " << std::ctime(&endTime);
-    std::cout << "Answers provided: " << answers.size() << std::endl;
+void QuizAttempt::display() const 
+{
+    cout << "Attempt ID: " << attemptID << endl;
+    if (student)
+    { 
+        cout << "Student: " << student->getName() << " (" << student->getStudentID() << ")" << endl;
+    }
+    if (quiz) 
+    {
+        cout << "Quiz: " << quiz->getTitle() << " (" << quiz->getQuizID() << ")" << endl;
+    }
+    cout << "Score: " << score << endl;
+    cout << "Start: " << ctime(&startTime);
+    if (endTime != 0)
+    { 
+        cout << "End: " << ctime(&endTime);
+    }
+    cout << "Answers provided: " << answers.size() << endl;
 }
