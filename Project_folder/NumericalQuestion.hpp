@@ -5,15 +5,18 @@
 #include <string>
 #include <cmath>
 
+using namespace std;
+
 class NumericalQuestion : public Question {
 private:
     double correctAnswer;
     double tolerance; // e.g., 0.05 for ±5%
 
 public:
-    NumericalQuestion(std::string id, std::string text, float marks);
+    NumericalQuestion(string id, string text, float marks);
+
     void setCorrectAnswer(double answer, double tolerance);
-    bool checkAnswer(std::string answer) const;
+    bool checkAnswer(string answer) const;
     void displayQuestion() const; 
 };
 
