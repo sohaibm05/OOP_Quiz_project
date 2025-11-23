@@ -44,7 +44,9 @@ static string normalize(const string& s)
     size_t end = s.size();
     while (end > start && ::isspace(static_cast<unsigned char>(s[end - 1]))) --end;
     string r = s.substr(start, end - start);
-    transform(r.begin(), r.end(), r.begin(), [](unsigned char c){ return static_cast<char>(::tolower(c)); });
+    for (size_t i = 0; i < r.size(); ++i) {
+        r[i] = static_cast<char>(::tolower(static_cast<unsigned char>(r[i])));
+    }
     return r;
 }
 
