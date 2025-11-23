@@ -50,14 +50,14 @@ int main() {
             string qdesc; // question description
             getline(cin, qdesc);
             cout << "Enter time limit (minutes): ";
-            string tline; 
+            string tline; // time limit line
             getline(cin, tline);
             int tlim = 30; 
             try 
             { 
-                tlim = stoi(tline); 
+                tlim = stoi(tline); // convert string to int
             } 
-            catch (...) { tlim = 30; }
+            catch (...) { tlim = 30; } // default 30 minutes
 
             Quiz* quiz = new Quiz(qid, qtitle, qdesc, tlim);
             cout << "Create mode for this quiz:\n 1) Add demo questions\n 2) Create interactively" << endl;
@@ -65,18 +65,34 @@ int main() {
             string cm; // create mode
             getline(cin, cm);
             int cmode = 1; try { cmode = stoi(cm); } catch (...) { cmode = 1; }
-            if (cmode == 1) {
+            if (cmode == 1) // demo questions which were made for quick testing
+            {
                 MCQ* mcq = new MCQ("Q1", "What is 2 + 2?", 5.0f);
-                mcq->addOption("3"); mcq->addOption("4"); mcq->addOption("5"); mcq->setCorrectOption(1);
-                TrueFalse* tf = new TrueFalse("Q2", "The earth is round.", 2.0f); tf->setCorrectAnswer(true);
-                FillInTheBlank* fib = new FillInTheBlank("Q3", "Capital of France?", 3.0f); fib->setCorrectAnswer("Paris");
-                NumericalQuestion* num = new NumericalQuestion("Q4", "Value of pi (approx)?", 4.0f); num->setCorrectAnswer(3.14159, 0.01);
-                quiz->addQuestion(mcq); quiz->addQuestion(tf); quiz->addQuestion(fib); quiz->addQuestion(num);
-            } else {
-                cout << "Entering interactive question creation for quiz '" << qid << "' (type 0 to finish)" << endl;
-                while (true) {
+                mcq->addOption("3");
+                mcq->addOption("4");
+                mcq->addOption("5"); 
+                mcq->setCorrectOption(1);
+                TrueFalse* tf = new TrueFalse("Q2", "The earth is round.", 2.0f);
+                tf->setCorrectAnswer(true);
+                FillInTheBlank* fib = new FillInTheBlank("Q3", "Capital of France?", 3.0f); 
+                fib->setCorrectAnswer("Paris");
+                NumericalQuestion* num = new NumericalQuestion("Q4", "Value of pi (approx)?", 4.0f);
+                num->setCorrectAnswer(3.14159, 0.01);
+
+                quiz->addQuestion(mcq);  // adding demo questions to quiz
+                quiz->addQuestion(tf); 
+                quiz->addQuestion(fib); 
+                quiz->addQuestion(num);
+            } else 
+            {
+                cout << "Entering interactive question creation for quiz '" << qid << "' (type 0 to finish)" << endl; //quiz id
+                while (true) 
+                {
                     Question* q = CreateQuestion::createQuestionInteractive();
-                    if (!q) break;
+                    if (!q)
+                    {
+                        break;
+                    }
                     quiz->addQuestion(q);
                     cout << "Question added. Current count: " << quiz->getQuestions().size() << "\n";
                 }
