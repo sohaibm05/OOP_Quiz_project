@@ -126,9 +126,17 @@ int main() {
             cout << "Select quiz to attempt (number): "; 
             string sel;
             getline(cin, sel);
-            int idx = -1; try { idx = stoi(sel) - 1; } catch (...) { idx = -1; }
+            int idx = -1; 
+            try 
+            { 
+                idx = stoi(sel) - 1; 
+            } catch (...) { idx = -1; }
+
             Quiz* chosen = manager.getQuiz(idx < 0 ? SIZE_MAX : static_cast<size_t>(idx));
-            if (!chosen) { cout << "Invalid selection." << endl; continue; }
+            if (!chosen) 
+            { 
+                cout << "Invalid selection." << endl; continue; 
+            }
 
             cout << "Attempting quiz: " << chosen->getTitle() << "\n";
             cout << "Enter your student ID: "; string sid; getline(cin, sid);
