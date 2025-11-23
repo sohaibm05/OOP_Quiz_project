@@ -182,18 +182,28 @@ int main() {
             attempt->display(); 
             cout << endl;
         }
-        else if (m == 5) {
+        else if (m == 5) 
+        {
             const auto &studs = studentManager.listStudents();
-            if (studs.empty()) { cout << "No students recorded." << endl; continue; }
+            if (studs.empty()) 
+            { 
+                cout << "No students recorded." << endl; 
+                continue;
+            }
             cout << "Students and attempts:" << endl;
-            for (Student* st : studs) {
+            for (Student* st : studs) 
+            {
                 st->display();
                 const auto &atts = st->getAttempts();
-                if (atts.empty()) {
+                if (atts.empty()) 
+                {
                     cout << "  (no attempts)" << endl;
-                } else {
+                } 
+                else 
+                {
                     cout << "  Attempts:" << endl;
-                    for (const QuizAttempt* a : atts) {
+                    for (const QuizAttempt* a : atts) 
+                    {
                         cout << "  - "; a->display(); // attempts being displayed here 
                     }
                 }
