@@ -6,15 +6,26 @@ QuizManager::~QuizManager() {
     quizzes.clear();
 }
 
-void QuizManager::addQuiz(Quiz* q) {
+void QuizManager::addQuiz(Quiz* q) 
+{
     if (q) quizzes.push_back(q);
 }
 
-const std::vector<Quiz*>& QuizManager::listQuizzes() const { return quizzes; }
+const std::vector<Quiz*>& QuizManager::listQuizzes() const
+{ 
+    return quizzes; 
+}
 
-Quiz* QuizManager::getQuiz(size_t index) const {
-    if (index < quizzes.size()) return quizzes[index];
+Quiz* QuizManager::getQuiz(size_t index) const 
+{
+    if (index < quizzes.size())
+    { 
+        return quizzes[index];
+    }
     return nullptr;
 }
 
-size_t QuizManager::count() const { return quizzes.size(); }
+size_t QuizManager::count() const 
+{ 
+    return quizzes.size(); 
+}
