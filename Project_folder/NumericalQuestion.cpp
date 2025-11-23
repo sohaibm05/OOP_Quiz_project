@@ -1,15 +1,16 @@
 #include "NumericalQuestion.hpp"
 #include <iostream>
 
-NumericalQuestion::NumericalQuestion(string id, string text, float marks)
-    : Question(id, text, marks), correctAnswer(0.0), tolerance(0.0) {}
+NumericalQuestion::NumericalQuestion(string id, string text, float marks): Question(id, text, marks), correctAnswer(0.0), tolerance(0.0) {}
 
-void NumericalQuestion::setCorrectAnswer(double answer, double tol) {
+void NumericalQuestion::setCorrectAnswer(double answer, double tol) 
+{
     correctAnswer = answer;
     tolerance = tol;
 }
 
-bool NumericalQuestion::checkAnswer(string answer) const {
+bool NumericalQuestion::checkAnswer(string answer) const 
+{
     try {
         double val = std::stod(answer);
         double diff = std::abs(val - correctAnswer);

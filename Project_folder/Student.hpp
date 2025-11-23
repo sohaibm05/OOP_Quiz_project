@@ -19,12 +19,14 @@ class Student
 
     public:
         Student(string id, string name, string email); // Constructor
-        
+        ~Student();
+
         void addAttempt(QuizAttempt* attempt); // Add a quiz attempt
         string getStudentID() const; // Get student ID
         string getEmail() const; // Get student email
         string getName() const; // Get student name
         void display() const; // Display student details
+        const std::vector<QuizAttempt*>& getAttempts() const;
     
 };
 

@@ -31,3 +31,17 @@ void Student::display() const
     cout << "Email: " << email << endl;
     cout << "Attempts: " << attempts.size() << endl;
 }
+
+Student::~Student()
+{
+    for (QuizAttempt* a : attempts) {
+        delete a;
+    }
+    attempts.clear();
+}
+
+const std::vector<QuizAttempt*>& Student::getAttempts() 
+const 
+{ 
+    return attempts; 
+}
