@@ -161,3 +161,8 @@ int main() {
     cout << "Exiting. Goodbye." << endl;
     return 0;
 }
+
+// cd 'c:\Users\dell\Documents\GitHub\OOP_Quiz_project\Project_folder' basixly cding
+// >> g++ -std=c++17 -c Question.cpp MCQ.cpp TrueFalse.cpp FillInTheBlank.cpp NumericalQuestion.cpp Student.cpp Quiz.cpp QuizAttempt.cpp CreateQuestion.cpp QuizManager.cpp StudentManager.cpp  main.cpp
+// >> g++ *.o -o quiz_app.exe
+// >> .\quiz_app.exe
