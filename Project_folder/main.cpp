@@ -57,68 +57,11 @@ int main() {
         cout << endl;
     } else {
         cout << "Entering interactive question creation. Type '0' as question type to finish." << endl;
-        int qcount = 0;
         while (true) {
-            cout << "Select question type:\n 1) MCQ\n 2) True/False\n 3) FillInTheBlank\n 4) Numerical\n 0) Done" << endl;
-            cout << "Your choice: ";
-            string choiceLine;
-            std::getline(cin, choiceLine);
-            int choice = -1;
-            try { choice = stoi(choiceLine); } catch (...) { choice = -1; }
-            if (choice == 0) break;
-
-            cout << "Enter question ID: ";
-            string qid; std::getline(cin, qid);
-            if (qid.empty()) qid = "Q" + to_string(++qcount);
-            cout << "Enter question text: ";
-            string qtext; std::getline(cin, qtext);
-            cout << "Enter marks (e.g. 2.5): ";
-            string marksLine; std::getline(cin, marksLine);
-            float marks = 1.0f;
-            try { marks = stof(marksLine); } catch (...) { marks = 1.0f; }
-
-            if (choice == 1) {
-                MCQ* m = new MCQ(qid, qtext, marks);
-                cout << "How many options? ";
-                string optCountLine; std::getline(cin, optCountLine);
-                int optCount = 0; try { optCount = stoi(optCountLine); } catch (...) { optCount = 0; }
-                for (int i = 0; i < optCount; ++i) {
-                    cout << "Option " << (i+1) << ": ";
-                    string opt; std::getline(cin, opt);
-                    m->addOption(opt);
-                }
-                cout << "Enter correct option number (1-based): ";
-                string corr; std::getline(cin, corr);
-                try { int idx = stoi(corr) - 1; m->setCorrectOption(idx); } catch (...) {}
-                quiz->addQuestion(m);
-            } else if (choice == 2) {
-                TrueFalse* t = new TrueFalse(qid, qtext, marks);
-                cout << "Correct answer (true/false): ";
-                string ans; std::getline(cin, ans);
-                // SAFE transform (critical fix):
-                std::transform(ans.begin(), ans.end(), ans.begin(),
-                    [](unsigned char c) { return std::tolower(c); });
-                t->setCorrectAnswer(ans == "true" || ans == "t" || ans == "1" || ans == "yes");
-                quiz->addQuestion(t);
-            } else if (choice == 3) {
-                FillInTheBlank* f = new FillInTheBlank(qid, qtext, marks);
-                cout << "Correct answer: ";
-                string can; std::getline(cin, can);
-                f->setCorrectAnswer(can);
-                quiz->addQuestion(f);
-            } else if (choice == 4) {
-                NumericalQuestion* n = new NumericalQuestion(qid, qtext, marks);
-                cout << "Correct numeric answer (e.g. 3.14): ";
-                string ans; std::getline(cin, ans);
-                double c = 0.0; try { c = stod(ans); } catch (...) { c = 0.0; }
-                cout << "Tolerance (e.g. 0.01 for 1% or absolute value): ";
-                string tol; std::getline(cin, tol);
-                double tval = 0.0; try { tval = stod(tol); } catch (...) { tval = 0.0; }
-                n->setCorrectAnswer(c, tval);
-                quiz->addQuestion(n);
-            } else {
-                cout << "Invalid choice, try again." << endl;
-            }
+            Question* q = CreateQuestion::createQuestionInteractive();
+            if (!q) break;
+            quiz->addQuestion(q);
+            cout << "Question added. Current count: " << quiz->getQuestions().size() << "\n";
         }
         cout << "Finished creating questions. Quiz contains " << quiz->getQuestions().size() << " questions." << endl;
         cout << endl;
