@@ -8,16 +8,23 @@ using namespace std;
 
 QuizAttempt::QuizAttempt(string id, Student* studentPtr, Quiz* quizPtr): attemptID(id), startTime(time(nullptr)), endTime(0), score(0.0f), student(studentPtr), quiz(quizPtr) {}
 
-void QuizAttempt::setAnswer(Question* question, string answer) { answers[question] = answer; }
+void QuizAttempt::setAnswer(Question* question, string answer) 
+{ 
+    answers[question] = answer; 
+}
 
-void QuizAttempt::submit() {
+void QuizAttempt::submit() 
+{
     float total = 0.0f;
     if (quiz) {
         const auto &qs = quiz->getQuestions();
-        for (Question* q : qs) {
+        for (Question* q : qs) 
+        {
             auto it = answers.find(q);
-            if (it != answers.end()) {
-                if (q->checkAnswer(it->second)) {
+            if (it != answers.end()) 
+            {
+                if (q->checkAnswer(it->second)) 
+                {
                     total += q->getMarks();
                 }
             }
