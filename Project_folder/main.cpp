@@ -194,7 +194,7 @@ int main() {
             for (Student* st : studs) 
             {
                 st->display();
-                const auto &atts = st->getAttempts();
+                const auto &atts = st->getAttempts(); // getting attempts of student atts is vector of QuizAttempt pointers
                 if (atts.empty()) 
                 {
                     cout << "  (no attempts)" << endl;
@@ -215,16 +215,25 @@ int main() {
             string id;
             getline(cin, id);
             auto matches = studentManager.findStudentsByID(id);
-            if (matches.empty()) { cout << "No students match '" << id << "'." << endl; continue; }
+            if (matches.empty()) 
+            { 
+                cout << "No students match '" << id << "'." << endl; 
+                continue; 
+            }
             cout << "Found " << matches.size() << " student(s):" << endl;
             for (Student* st : matches) 
             {
                 st->display();
                 const auto &atts = st->getAttempts();
-                if (atts.empty()) cout << "  (no attempts)" << endl;
-                else {
+                if (atts.empty())
+                { 
+                    cout << "  (no attempts)" << endl;
+                }
+                else 
+                {
                     cout << "  Attempts:" << endl;
-                    for (const QuizAttempt* a : atts) {
+                    for (const QuizAttempt* a : atts) 
+                    {
                         cout << "  - "; a->display();
                     }
                 }
