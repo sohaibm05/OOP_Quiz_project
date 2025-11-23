@@ -27,18 +27,20 @@ int main() {
     {
         cout << "Main menu:\n 1) Create quiz\n 2) List quizzes\n 3) Attempt a quiz\n 4) Exit\n 5) List students & attempts\n 6) Find students by id" << endl;
         cout << "Your choice: ";
-        string mainChoice; getline(cin, mainChoice);
+        string mainChoice; 
+        getline(cin, mainChoice);
         int m = -1; try 
-        { m = stoi(mainChoice); 
-        } catch (...) 
-        { m = -1; }
+        { 
+            m = stoi(mainChoice); 
+        } catch (...) { m = -1; }
         if (m == 4) break;
 
         if (m == 1) 
         {
             // Create a new quiz
             cout << "Create quiz: Enter quiz ID: ";
-            string qid; getline(cin, qid);
+            string qid; 
+            getline(cin, qid);
             if (qid.empty()) 
             {
                 qid = "Quiz" + to_string(manager.count() + 1);
@@ -114,10 +116,16 @@ int main() {
                 cout << i + 1 << ") " << qs[i]->getTitle() << " (" << qs[i]->getQuizID() << ") - " << qs[i]->getQuestions().size() << " questions" << endl;
             }
         }
-        else if (m == 3) {
-            const auto &qs = manager.listQuizzes();
-            if (qs.empty()) { cout << "No quizzes to attempt. Create one first." << endl; continue; }
-            cout << "Select quiz to attempt (number): "; string sel; getline(cin, sel);
+        else if (m == 3) 
+        {
+            const auto &qs = manager.listQuizzes(); 
+            if (qs.empty()) 
+            { 
+                cout << "No quizzes to attempt. Create one first." << endl; continue; 
+            }
+            cout << "Select quiz to attempt (number): "; 
+            string sel;
+            getline(cin, sel);
             int idx = -1; try { idx = stoi(sel) - 1; } catch (...) { idx = -1; }
             Quiz* chosen = manager.getQuiz(idx < 0 ? SIZE_MAX : static_cast<size_t>(idx));
             if (!chosen) { cout << "Invalid selection." << endl; continue; }
