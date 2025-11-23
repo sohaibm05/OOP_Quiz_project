@@ -210,7 +210,8 @@ int main() {
                 cout << "---" << endl;
             }
         }
-        else if (m == 6) {
+        else if (m == 6) 
+        {
             cout << "Enter id to search:";
             string id;
             getline(cin, id);
@@ -240,7 +241,8 @@ int main() {
                 cout << "---" << endl;
             }
         }
-        else if (m == 0) {
+        else if (m == 0) 
+        {
             // Exit
             break;
         }

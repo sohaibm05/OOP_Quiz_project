@@ -26,11 +26,11 @@ static string toLowerCopy(const string &s) // not neccesary will remove in final
 
 bool MCQ::checkAnswer(string answer) const 
 {
-        int idx = stoi(answer) - 1; // string to integer  the issue is this gives error if it fails to convert so we need to handle that 
-        if (idx == correctOption) // will think about using try and catch
-        {
-            return true;
-        }
+    int idx = stoi(answer) - 1; // string to integer  the issue is this gives error if it fails to convert so we need to handle that 
+    if (idx == correctOption) // will think about using try and catch
+    {
+        return true;
+    }
     return false;
 }
 
