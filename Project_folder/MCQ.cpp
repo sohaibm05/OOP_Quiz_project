@@ -20,7 +20,9 @@ void MCQ::setCorrectOption(int index)
 static string toLowerCopy(const string &s) // not neccesary will remove in final version keeping just incase i need for future 
 {
     string r = s;
-    transform(r.begin(), r.end(), r.begin(), ::tolower);
+    for (size_t i = 0; i < r.size(); ++i) {
+        r[i] = static_cast<char>(std::tolower(static_cast<unsigned char>(r[i])));
+    }
     return r;
 }
 
