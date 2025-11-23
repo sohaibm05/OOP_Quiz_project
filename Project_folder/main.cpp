@@ -97,15 +97,20 @@ int main() {
                     cout << "Question added. Current count: " << quiz->getQuestions().size() << "\n";
                 }
             }
-
-            manager.addQuiz(quiz);
+            manager.addQuiz(quiz); // add the created quiz to Quiz manager
             cout << "Quiz '" << qtitle << "' created and added. Total quizzes: " << manager.count() << "\n";
         }
-        else if (m == 2) {
-            const auto &qs = manager.listQuizzes();
-            if (qs.empty()) { cout << "No quizzes available." << endl; continue; }
+        else if (m == 2) 
+        {
+            const auto &qs = manager.listQuizzes(); // reference to list of quizzes using auto keyword cuz we dont know the exact type
+            if (qs.empty()) 
+            { 
+                cout << "No quizzes available." << endl; 
+                continue; 
+            }
             cout << "Available quizzes:" << endl;
-            for (size_t i = 0; i < qs.size(); ++i) {
+            for (size_t i = 0; i < qs.size(); ++i) 
+            {
                 cout << i + 1 << ") " << qs[i]->getTitle() << " (" << qs[i]->getQuizID() << ") - " << qs[i]->getQuestions().size() << " questions" << endl;
             }
         }
