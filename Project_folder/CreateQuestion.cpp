@@ -6,15 +6,20 @@
 
 using namespace std;
 
-static string readLineTrimmed()
+static string readLineTrimmed() // same logic as normalize in FillInTheBlank.cpp but returns trimmed string instead of lowercased
 {
     string s;
     getline(cin, s);
-    // trim simple leading/trailing whitespace
     size_t start = 0;
-    while (start < s.size() && isspace(static_cast<unsigned char>(s[start]))) ++start;
+    while (start < s.size() && isspace(static_cast<unsigned char>(s[start])))
+    { 
+        ++start;
+    }
     size_t end = s.size();
-    while (end > start && isspace(static_cast<unsigned char>(s[end - 1]))) --end;
+    while (end > start && isspace(static_cast<unsigned char>(s[end - 1])))
+    { 
+        --end;
+    }
     return s.substr(start, end - start);
 }
 

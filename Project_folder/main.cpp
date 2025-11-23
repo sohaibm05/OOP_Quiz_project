@@ -1,5 +1,5 @@
 #include <iostream>
-#include <algorithm>  // For std::transform
+#include <algorithm>  // For transform
 #include <cctype>     // For ::tolower
 #include <string>     // For string operations
 #include <vector>     // If needed
@@ -23,27 +23,47 @@ int main() {
     QuizManager manager;
     StudentManager studentManager;
 
-    while (true) {
+    while (true) 
+    {
         cout << "Main menu:\n 1) Create quiz\n 2) List quizzes\n 3) Attempt a quiz\n 4) Exit\n 5) List students & attempts\n 6) Find students by id" << endl;
         cout << "Your choice: ";
-        string mainChoice; std::getline(cin, mainChoice);
-        int m = -1; try { m = stoi(mainChoice); } catch (...) { m = -1; }
+        string mainChoice; getline(cin, mainChoice);
+        int m = -1; try 
+        { m = stoi(mainChoice); 
+        } catch (...) 
+        { m = -1; }
         if (m == 4) break;
 
-        if (m == 1) {
+        if (m == 1) 
+        {
             // Create a new quiz
             cout << "Create quiz: Enter quiz ID: ";
-            string qid; std::getline(cin, qid);
-            if (qid.empty()) qid = "Quiz" + to_string(manager.count() + 1);
-            cout << "Enter title: "; string qtitle; std::getline(cin, qtitle);
-            cout << "Enter description: "; string qdesc; std::getline(cin, qdesc);
-            cout << "Enter time limit (minutes): "; string tline; std::getline(cin, tline);
-            int tlim = 30; try { tlim = stoi(tline); } catch (...) { tlim = 30; }
+            string qid; getline(cin, qid);
+            if (qid.empty()) 
+            {
+                qid = "Quiz" + to_string(manager.count() + 1);
+            }
+            cout << "Enter title: ";
+            string qtitle; 
+            getline(cin, qtitle);
+            cout << "Enter description: ";
+            string qdesc; // question description
+            getline(cin, qdesc);
+            cout << "Enter time limit (minutes): ";
+            string tline; 
+            getline(cin, tline);
+            int tlim = 30; 
+            try 
+            { 
+                tlim = stoi(tline); 
+            } 
+            catch (...) { tlim = 30; }
 
             Quiz* quiz = new Quiz(qid, qtitle, qdesc, tlim);
-
             cout << "Create mode for this quiz:\n 1) Add demo questions\n 2) Create interactively" << endl;
-            cout << "Choice: "; string cm; std::getline(cin, cm);
+            cout << "Choice: "; 
+            string cm; // create mode
+            getline(cin, cm);
             int cmode = 1; try { cmode = stoi(cm); } catch (...) { cmode = 1; }
             if (cmode == 1) {
                 MCQ* mcq = new MCQ("Q1", "What is 2 + 2?", 5.0f);
@@ -76,17 +96,17 @@ int main() {
         else if (m == 3) {
             const auto &qs = manager.listQuizzes();
             if (qs.empty()) { cout << "No quizzes to attempt. Create one first." << endl; continue; }
-            cout << "Select quiz to attempt (number): "; string sel; std::getline(cin, sel);
+            cout << "Select quiz to attempt (number): "; string sel; getline(cin, sel);
             int idx = -1; try { idx = stoi(sel) - 1; } catch (...) { idx = -1; }
             Quiz* chosen = manager.getQuiz(idx < 0 ? SIZE_MAX : static_cast<size_t>(idx));
             if (!chosen) { cout << "Invalid selection." << endl; continue; }
 
             cout << "Attempting quiz: " << chosen->getTitle() << "\n";
-            cout << "Enter your student ID: "; string sid; std::getline(cin, sid);
+            cout << "Enter your student ID: "; string sid; getline(cin, sid);
             if (sid.empty()) sid = "S1";
-            cout << "Enter your name: "; string sname; std::getline(cin, sname);
+            cout << "Enter your name: "; string sname; getline(cin, sname);
             if (sname.empty()) sname = "Student";
-            cout << "Enter your email: "; string sem; std::getline(cin, sem);
+            cout << "Enter your email: "; string sem; getline(cin, sem);
 
             Student* s = studentManager.findStudentByID(sid);
             if (!s) {
@@ -101,7 +121,7 @@ int main() {
             for (Question* q : chosen->getQuestions()) {
                 q->displayQuestion();
                 cout << "Your answer: ";
-                string userAns; std::getline(cin, userAns);
+                string userAns; getline(cin, userAns);
                 attempt->setAnswer(q, userAns);
             }
 
@@ -130,7 +150,7 @@ int main() {
         else if (m == 6) {
             cout << "Enter id to search:";
             string id;
-            std::getline(cin, id);
+            getline(cin, id);
             auto matches = studentManager.findStudentsByID(id);
             if (matches.empty()) { cout << "No students match '" << id << "'." << endl; continue; }
             cout << "Found " << matches.size() << " student(s):" << endl;
