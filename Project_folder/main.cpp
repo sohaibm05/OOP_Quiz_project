@@ -167,16 +167,20 @@ int main() {
             QuizAttempt* attempt = new QuizAttempt("A1", s, chosen);
 
             cout << "Please answer the following questions (type the option number or your answer text):" << endl;
-            for (Question* q : chosen->getQuestions()) {
+            for (Question* q : chosen->getQuestions()) 
+            {
                 q->displayQuestion();
                 cout << "Your answer: ";
-                string userAns; getline(cin, userAns);
+                string userAns; 
+                getline(cin, userAns);
                 attempt->setAnswer(q, userAns);
             }
 
             s->addAttempt(attempt);
             attempt->submit();
-            cout << "After submitting attempt:" << endl; attempt->display(); cout << endl;
+            cout << "After submitting attempt:" << endl;
+            attempt->display(); 
+            cout << endl;
         }
         else if (m == 5) {
             const auto &studs = studentManager.listStudents();
