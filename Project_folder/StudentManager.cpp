@@ -65,7 +65,10 @@ static string normalize(const string& s)
 vector<Student*> StudentManager::findStudentsByID(const string& id) const
 {
     vector<Student*> matches;
-    if (id.empty()) return matches;
+    if (id.empty())
+    { 
+        return matches;
+    }
     string term = normalize(id);
     for (Student* s : students) 
     {
