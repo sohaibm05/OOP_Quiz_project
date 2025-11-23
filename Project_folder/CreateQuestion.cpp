@@ -29,8 +29,14 @@ Question* CreateQuestion::createQuestionInteractive()
     cout << "Your choice: ";
     string choiceLine = readLineTrimmed();
     int choice = -1;
-    try { choice = stoi(choiceLine); } catch (...) { choice = -1; }
-    if (choice == 0) return nullptr;
+    try 
+    { 
+        choice = stoi(choiceLine); 
+    } catch (...) { choice = -1; }
+    if (choice == 0)
+    {
+        return nullptr;
+    }
 
     cout << "Enter question ID (leave blank to auto-generate): ";
     string qid = readLineTrimmed();
@@ -38,30 +44,48 @@ Question* CreateQuestion::createQuestionInteractive()
     string qtext = readLineTrimmed();
     cout << "Enter marks (e.g. 2.5): ";
     string marksLine = readLineTrimmed();
-    float marks = 1.0f;
-    try { marks = stof(marksLine); } catch (...) { marks = 1.0f; }
+    float marks = 1.0f; // default marks
+    try 
+    { 
+        marks = stof(marksLine); 
+    } catch (...) { marks = 1.0f;}
 
-    if (choice == 1) {
+    if (choice == 1) 
+    {
         MCQ* m = new MCQ(qid.empty() ? "" : qid, qtext, marks);
         cout << "How many options? ";
         string optCountLine = readLineTrimmed();
-        int optCount = 0; try { optCount = stoi(optCountLine); } catch (...) { optCount = 0; }
-        for (int i = 0; i < optCount; ++i) {
+        int optCount = 0; 
+        try 
+        { 
+            optCount = stoi(optCountLine); 
+        } catch (...) { optCount = 0; }
+
+        for (int i = 0; i < optCount; ++i) 
+        {
             cout << "Option " << (i+1) << ": ";
             string opt = readLineTrimmed();
             m->addOption(opt);
         }
         cout << "Enter correct option number (1-based): ";
         string corr = readLineTrimmed();
-        try { int idx = stoi(corr) - 1; m->setCorrectOption(idx); } catch (...) {}
+        try 
+        { 
+            int idx = stoi(corr) - 1;
+            m->setCorrectOption(idx); //idx 
+        } catch (...) {}
         return m;
     }
 
-    if (choice == 2) {
+    if (choice == 2) 
+    {
         TrueFalse* t = new TrueFalse(qid.empty() ? "" : qid, qtext, marks);
         cout << "Correct answer (true/false): ";
         string ans = readLineTrimmed();
-        transform(ans.begin(), ans.end(), ans.begin(), [](unsigned char c){ return static_cast<char>(tolower(c)); });
+        for (size_t i = 0; i < ans.size(); ++i) 
+        {
+            ans[i] = static_cast<char>(tolower(static_cast<unsigned char>(ans[i])));
+        }
         t->setCorrectAnswer(ans == "true" || ans == "t" || ans == "1" || ans == "yes");
         return t;
     }
