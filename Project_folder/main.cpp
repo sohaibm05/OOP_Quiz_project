@@ -132,21 +132,33 @@ int main() {
                 idx = stoi(sel) - 1; 
             } catch (...) { idx = -1; }
 
-            Quiz* chosen = manager.getQuiz(idx < 0 ? SIZE_MAX : static_cast<size_t>(idx));
-            if (!chosen) 
+            Quiz* chosen = manager.getQuiz(idx < 0 ? SIZE_MAX : static_cast<size_t>(idx));// to avoid negative index being converted to large size_t ? means if idx<0 then use SIZE_MAX else convert idx to size_t size max means
+            if (!chosen) // if chosen is nullptr
             { 
                 cout << "Invalid selection." << endl; continue; 
             }
-
             cout << "Attempting quiz: " << chosen->getTitle() << "\n";
-            cout << "Enter your student ID: "; string sid; getline(cin, sid);
-            if (sid.empty()) sid = "S1";
-            cout << "Enter your name: "; string sname; getline(cin, sname);
-            if (sname.empty()) sname = "Student";
-            cout << "Enter your email: "; string sem; getline(cin, sem);
+            cout << "Enter your student ID: "; 
+            string sid; 
+            getline(cin, sid);
+            if (sid.empty()) 
+            {   
+                sid = "S1";
+            }
+            cout << "Enter your name: ";
+            string sname; 
+            getline(cin, sname);
+            if (sname.empty()) 
+            {
+                sname = "Student";
+            }
+            cout << "Enter your email: "; 
+            string sem; 
+            getline(cin, sem);
 
             Student* s = studentManager.findStudentByID(sid);
-            if (!s) {
+            if (!s) 
+            {
                 s = new Student(sid, sname, sem);
                 s = studentManager.addOrGetStudent(s);
             }
