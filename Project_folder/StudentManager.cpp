@@ -16,9 +16,12 @@ Student* StudentManager::addOrGetStudent(Student* s)
 {
     if (!s) return nullptr;
     const string id = s->getStudentID();
-    if (!id.empty()) {
-        for (Student* existing : students) {
-            if (existing->getStudentID() == id) {
+    if (!id.empty()) 
+    {
+        for (Student* existing : students) 
+        {
+            if (existing->getStudentID() == id) 
+            {
                 delete s; // avoid leak
                 return existing;
             }
@@ -31,7 +34,8 @@ Student* StudentManager::addOrGetStudent(Student* s)
 Student* StudentManager::findStudentByID(const string& id) const
 {
     if (id.empty()) return nullptr;
-    for (Student* s : students) {
+    for (Student* s : students) 
+    {
         if (s->getStudentID() == id) return s;
     }
     return nullptr;
@@ -40,11 +44,18 @@ Student* StudentManager::findStudentByID(const string& id) const
 static string normalize(const string& s)
 {
     size_t start = 0;
-    while (start < s.size() && ::isspace(static_cast<unsigned char>(s[start]))) ++start;
+    while (start < s.size() && ::isspace(static_cast<unsigned char>(s[start])))
+    { 
+        ++start;
+    }
     size_t end = s.size();
-    while (end > start && ::isspace(static_cast<unsigned char>(s[end - 1]))) --end;
+    while (end > start && ::isspace(static_cast<unsigned char>(s[end - 1])))
+    { 
+        --end;
+    }
     string r = s.substr(start, end - start);
-    for (size_t i = 0; i < r.size(); ++i) {
+    for (size_t i = 0; i < r.size(); ++i) 
+    {
         r[i] = static_cast<char>(::tolower(static_cast<unsigned char>(r[i])));
     }
     return r;
@@ -56,7 +67,8 @@ vector<Student*> StudentManager::findStudentsByID(const string& id) const
     vector<Student*> matches;
     if (id.empty()) return matches;
     string term = normalize(id);
-    for (Student* s : students) {
+    for (Student* s : students) 
+    {
         string sid = normalize(s->getStudentID());
         if (sid.find(term) != string::npos) matches.push_back(s);
     }
