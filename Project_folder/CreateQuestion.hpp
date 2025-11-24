@@ -7,7 +7,8 @@
 #include "FillInTheBlank.hpp"
 #include "NumericalQuestion.hpp"
 
-namespace CreateQuestion {
+namespace CreateQuestion 
+{
     // Prompts the user to create a single question interactively.
     // Returns a newly allocated Question* (caller owns it) or nullptr if the user chose to finish/cancel.
     // Ownership: the returned Question* is newly allocated and ownership is

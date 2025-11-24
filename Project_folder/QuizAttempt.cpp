@@ -31,7 +31,7 @@ void QuizAttempt::submit()
         }
     }
     score = total;
-    endTime = time(nullptr);
+    endTime = time(nullptr); // inad is gay
 }
 
 float QuizAttempt::getScore() const 
