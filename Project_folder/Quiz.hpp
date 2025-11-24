@@ -12,12 +12,17 @@ private:
     string title;
     string description;
     int timeLimit; // minutes
-    vector<Question*> questions; // Quiz owns these questions
+    // Quiz owns the Question* pointers stored here. Questions added via
+    // `addQuestion` become owned by the Quiz and will be deleted in the
+    // Quiz destructor.
+    vector<Question*> questions;
 
 public:
     Quiz(string id, string title, string desc, int timeLimit); // Constructor  
     ~Quiz(); // Must delete all questions
 
+    // Takes ownership of `question`. Caller must not delete `question`
+    // after passing it to this method.
     void addQuestion(Question* question);
     void displayQuiz() const; //Display entire quiz
 
