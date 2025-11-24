@@ -66,7 +66,12 @@ int main() {
             cout << "Choice: "; 
             string cm; // create mode
             getline(cin, cm);
-            int cmode = 1; try { cmode = stoi(cm); } catch (...) { cmode = 1; }
+            int cmode = 1; 
+            try // we use try catch to avoid crash if input is invalid
+            { 
+                cmode = stoi(cm); 
+            } catch (...) { cmode = 1; }
+
             if (cmode == 1) // demo questions which were made for quick testing
             {
                 MCQ* mcq = new MCQ("Q1", "What is 2 + 2?", 5.0f);
@@ -132,10 +137,14 @@ int main() {
                 idx = stoi(sel) - 1; 
             } catch (...) { idx = -1; }
 
-            Quiz* chosen = manager.getQuiz(idx < 0 ? SIZE_MAX : static_cast<size_t>(idx));// to avoid negative index being converted to large size_t ? means if idx<0 then use SIZE_MAX else convert idx to size_t size max means
+            size_t selIndex;
+            if (idx < 0) selIndex = static_cast<size_t>(-1);
+            else selIndex = static_cast<size_t>(idx);
+            Quiz* chosen = manager.getQuiz(selIndex);
             if (!chosen) // if chosen is nullptr
             { 
-                cout << "Invalid selection." << endl; continue; 
+                cout << "Invalid selection." << endl; 
+                continue; 
             }
             cout << "Attempting quiz: " << chosen->getTitle() << "\n";
             cout << "Enter your student ID: "; 
