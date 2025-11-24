@@ -16,6 +16,7 @@ public:
     void addQuiz(Quiz* q);
     const std::vector<Quiz*>& listQuizzes() const;
     Quiz* getQuiz(size_t index) const; // returns nullptr if out of range
+    Quiz* getQuiz(int index) const; // signed-index overload for convenience
     size_t count() const;
 };
 

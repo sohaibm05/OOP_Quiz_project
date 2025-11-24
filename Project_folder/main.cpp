@@ -137,10 +137,8 @@ int main() {
                 idx = stoi(sel) - 1; 
             } catch (...) { idx = -1; }
 
-            size_t selIndex;
-            if (idx < 0) selIndex = static_cast<size_t>(-1);
-            else selIndex = static_cast<size_t>(idx);
-            Quiz* chosen = manager.getQuiz(selIndex);
+                if (idx < 0) { cout << "Invalid selection." << endl; continue; }
+                Quiz* chosen = manager.getQuiz(idx);
             if (!chosen) // if chosen is nullptr
             { 
                 cout << "Invalid selection." << endl; 

@@ -1,8 +1,8 @@
 #include "StudentManager.hpp"
 #include "Student.hpp"
-#include <string>
-#include <algorithm>
-#include <cctype>
+#include <string> // for string
+#include <algorithm> // for transform
+#include <cctype> // for isspace and tolower
 
 using namespace std;
 
