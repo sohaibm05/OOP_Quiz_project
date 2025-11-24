@@ -52,7 +52,7 @@ Question* CreateQuestion::createQuestionInteractive()
 
     if (choice == 1) 
     {
-        MCQ* m = new MCQ(qid.empty() ? "" : qid, qtext, marks);
+        MCQ* m = new MCQ(qid, qtext, marks);
         cout << "How many options? ";
         string optCountLine = readLineTrimmed();
         int optCount = 0; 
@@ -79,7 +79,7 @@ Question* CreateQuestion::createQuestionInteractive()
 
     if (choice == 2) 
     {
-        TrueFalse* t = new TrueFalse(qid.empty() ? "" : qid, qtext, marks);
+        TrueFalse* t = new TrueFalse(qid, qtext, marks);
         cout << "Correct answer (true/false): ";
         string ans = readLineTrimmed();
         for (size_t i = 0; i < ans.size(); ++i) 
@@ -90,22 +90,33 @@ Question* CreateQuestion::createQuestionInteractive()
         return t;
     }
 
-    if (choice == 3) {
-        FillInTheBlank* f = new FillInTheBlank(qid.empty() ? "" : qid, qtext, marks);
+    if (choice == 3) 
+    {
+        FillInTheBlank* f = new FillInTheBlank(qid, qtext, marks);
         cout << "Correct answer: ";
         string can = readLineTrimmed();
         f->setCorrectAnswer(can);
         return f;
     }
 
-    if (choice == 4) {
-        NumericalQuestion* n = new NumericalQuestion(qid.empty() ? "" : qid, qtext, marks);
+    if (choice == 4) 
+    {
+        NumericalQuestion* n = new NumericalQuestion(qid, qtext, marks);
         cout << "Correct numeric answer (e.g. 3.14): ";
         string ans = readLineTrimmed();
-        double c = 0.0; try { c = stod(ans); } catch (...) { c = 0.0; }
+        double c = 0.0; 
+        try 
+        { 
+            c = stod(ans); 
+        } catch (...) { c = 0.0; }
+
         cout << "Tolerance (e.g. 0.01 for 1% or absolute value): ";
         string tol = readLineTrimmed();
-        double tval = 0.0; try { tval = stod(tol); } catch (...) { tval = 0.0; }
+        double tval = 0.0; 
+        try 
+        { 
+            tval = stod(tol); 
+        } catch (...) { tval = 0.0; }
         n->setCorrectAnswer(c, tval);
         return n;
     }

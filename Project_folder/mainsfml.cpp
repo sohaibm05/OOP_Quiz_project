@@ -370,7 +370,7 @@ int main() {
                                 Question* q = nullptr;
                                 
                                 if (type == 1) { // MCQ
-                                    MCQ* m = new MCQ(qid.empty() ? "" : qid, qtext, marks);
+                                    MCQ* m = new MCQ(qid, qtext, marks);
                                     // For demo purposes, add some options
                                     m->addOption("Option 1");
                                     m->addOption("Option 2");
@@ -378,15 +378,15 @@ int main() {
                                     m->setCorrectOption(0);
                                     q = m;
                                 } else if (type == 2) { // True/False
-                                    TrueFalse* t = new TrueFalse(qid.empty() ? "" : qid, qtext, marks);
+                                    TrueFalse* t = new TrueFalse(qid, qtext, marks);
                                     t->setCorrectAnswer(true);
                                     q = t;
                                 } else if (type == 3) { // Fill in the Blank
-                                    FillInTheBlank* f = new FillInTheBlank(qid.empty() ? "" : qid, qtext, marks);
+                                    FillInTheBlank* f = new FillInTheBlank(qid, qtext, marks);
                                     f->setCorrectAnswer("Answer");
                                     q = f;
                                 } else if (type == 4) { // Numerical
-                                    NumericalQuestion* n = new NumericalQuestion(qid.empty() ? "" : qid, qtext, marks);
+                                    NumericalQuestion* n = new NumericalQuestion(qid, qtext, marks);
                                     n->setCorrectAnswer(0.0, 0.0);
                                     q = n;
                                 }
