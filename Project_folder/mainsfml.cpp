@@ -721,5 +721,13 @@ int main() {
 }
 
 
+// g++ -std=c++17 *.cpp -I"C:\SFML-2.5.1\include" -L"C:\SFML-2.5.1\lib" -lsfml-graphics -lsfml-window -lsfml-system -o quiz_sfml.exe
+// .\quiz_sfml.exe
+
 // g++ -std=c++17 *.cpp -I"path\to\SFML\include" -L"path\to\SFML\lib" -lsfml-graphics -lsfml-window -lsfml-system -o quiz_sfml.exe
+// .\quiz_sfml.exe
+
+
+// cd 'C:\Users\dell\Documents\GitHub\OOP_Quiz_project\Project_folder'
+// g++ -std=c++17 mainsfml.cpp Question.cpp MCQ.cpp TrueFalse.cpp FillInTheBlank.cpp NumericalQuestion.cpp Student.cpp Quiz.cpp QuizAttempt.cpp CreateQuestion.cpp QuizManager.cpp StudentManager.cpp -I"C:\SFML-2.5.1\include" -L"C:\SFML-2.5.1\lib" -lsfml-graphics -lsfml-window -lsfml-system -o quiz_sfml.exe
 // .\quiz_sfml.exe
