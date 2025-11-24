@@ -719,3 +719,7 @@ int main() {
 
     return 0;
 }
+
+
+// g++ -std=c++17 *.cpp -I"path\to\SFML\include" -L"path\to\SFML\lib" -lsfml-graphics -lsfml-window -lsfml-system -o quiz_sfml.exe
+// .\quiz_sfml.exe
