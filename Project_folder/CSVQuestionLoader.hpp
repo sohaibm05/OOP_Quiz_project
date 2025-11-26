@@ -34,20 +34,15 @@ public:
     static vector<Question*> loadFromCSV(const string& filePath);
 
 private:
-    // Helper: split a CSV line by comma (simple, handles basic cases)
-    static vector<string> splitCSV(const string& line);
+    static vector<string> splitCSV(const string& line); // split CSV line into fields
     
-    // Helper: trim whitespace
-    static string trim(const string& str);
+    static string trim(const string& str); // trim whitespace from both ends
     
-    // Helper: parse int safely
-    static bool tryParseInt(const string& str, int& out);
+    static bool tryParseInt(const string& str, int& out); // parse int safely
     
-    // Helper: parse float safely
-    static bool tryParseFloat(const string& str, float& out);
+    static bool tryParseFloat(const string& str, float& out); // parse float safely
     
-    // Helper: parse bool (true/false)
-    static bool parseBool(const string& str);
+    static bool parseBool(const string& str); // simple true/false parser
 };
 
-#endif // CSVQUESTIONLOADER_HPP
+#endif 
