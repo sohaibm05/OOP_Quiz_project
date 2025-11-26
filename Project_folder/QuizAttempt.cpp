@@ -18,7 +18,7 @@ void QuizAttempt::submit()
     float total = 0.0f;
     if (quiz) {
         const auto &qs = quiz->getQuestions();
-        for (Question* q : qs) 
+        for (Question* q : qs)
         {
             auto it = answers.find(q);
             if (it != answers.end()) 
@@ -31,7 +31,7 @@ void QuizAttempt::submit()
         }
     }
     score = total;
-    endTime = time(nullptr); // inad is gay
+    endTime = time(nullptr);
 }
 
 float QuizAttempt::getScore() const 

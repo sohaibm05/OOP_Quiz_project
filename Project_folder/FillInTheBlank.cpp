@@ -27,7 +27,7 @@ static string normalize(const string& s)
     {
         --end;
     }
-
+    
     string result; // Now [start, end] is the trimmed range (inclusive)
     for (int i = start; i <= end; ++i)   // Step 3: Copy and convert to lowercase
     {
