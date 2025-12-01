@@ -31,7 +31,6 @@ class QuizAttempt
         float getScore() const; // Get the score
         string getAttemptID() const;
         void display() const; // Display attempt details
-
 };
 
 #endif // QUIZATTEMPT_HPP

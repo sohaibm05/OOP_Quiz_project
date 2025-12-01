@@ -77,7 +77,6 @@ vector<Student*> StudentManager::findStudentsByID(const string& id) const
     }
     return matches;
 }
-
 const vector<Student*>& StudentManager::listStudents() const 
 { 
     return students; 
