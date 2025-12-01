@@ -15,12 +15,16 @@ class Student
         string studentID;
         string name;
         string email;
-        vector<QuizAttempt*> attempts; // Student references attempts
+        // Student owns QuizAttempt pointers added via `addAttempt`.
+        // Attempts are deleted in the Student destructor.
+        vector<QuizAttempt*> attempts;
 
     public:
         Student(string id, string name, string email); // Constructor
         ~Student();
 
+        // Takes ownership of `attempt`. The Student will delete it in the
+        // destructor. Do not delete the attempt after calling this.
         void addAttempt(QuizAttempt* attempt); // Add a quiz attempt
         string getStudentID() const; // Get student ID
         string getEmail() const; // Get student email

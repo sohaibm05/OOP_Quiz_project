@@ -7,10 +7,9 @@
 #include "FillInTheBlank.hpp"
 #include "NumericalQuestion.hpp"
 
-namespace CreateQuestion {
-    // Prompts the user to create a single question interactively.
-    // Returns a newly allocated Question* (caller owns it) or nullptr if the user chose to finish/cancel.
-    Question* createQuestionInteractive();
+namespace CreateQuestion 
+{
+    Question* createQuestionInteractive(); // made this just so that main function is smaler and cleaner
 }
 
 #endif // CREATEQUESTION_HPP

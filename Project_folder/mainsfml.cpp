@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cctype>
 #include <string>
+#include <sstream>
 #include <vector>
 #include <map>
 #include <ctime>
@@ -137,6 +138,17 @@ int main() {
 
     QuizManager manager;
     StudentManager studentManager;
+    // parsing helpers
+    auto parseInt = [](const std::string &s, int def)->int {
+        if (s.empty()) return def;
+        std::stringstream ss(s);
+        int v; if (ss >> v) return v; return def;
+    };
+    auto parseFloat = [](const std::string &s, float def)->float {
+        if (s.empty()) return def;
+        std::stringstream ss(s);
+        float v; if (ss >> v) return v; return def;
+    };
     
     // State management
     enum AppState {
@@ -186,6 +198,7 @@ int main() {
     // Attempt quiz state variables
     vector<Button> attemptQuizButtons;
     vector<Quiz*> availableQuizzes;
+    int selectedAttemptQuiz = -1; // index of selected quiz in attempt screen
     TextInput studentIdInput(sf::Vector2f(50, 250), sf::Vector2f(300, 50), font);
     TextInput studentNameInput(sf::Vector2f(50, 340), sf::Vector2f(300, 50), font);
     TextInput studentEmailInput(sf::Vector2f(50, 430), sf::Vector2f(300, 50), font);
@@ -292,10 +305,7 @@ int main() {
                             }
                             string qtitle = quizTitleInput.getValue();
                             string qdesc = quizDescInput.getValue();
-                            int tlim = 30;
-                            try {
-                                tlim = stoi(timeLimitInput.getValue());
-                            } catch (...) {}
+                            int tlim = parseInt(timeLimitInput.getValue(), 30);
                             
                             Quiz* quiz = new Quiz(qid, qtitle, qdesc, tlim);
                             for (Question* q : currentQuestions) {
@@ -321,10 +331,27 @@ int main() {
                             }
                         }
                     } else if (state == ATTEMPT_QUIZ) {
+                        // Check for clicks on quiz buttons (select quiz to attempt)
+                        for (size_t bi = 0; bi < attemptQuizButtons.size(); ++bi) {
+                            Button &b = attemptQuizButtons[bi];
+                            if (b.isClicked(mousePos)) {
+                                selectedAttemptQuiz = static_cast<int>(b.id) - 1;
+                                // set currentQuiz preview (not starting attempt yet)
+                                currentQuiz = availableQuizzes[selectedAttemptQuiz];
+                                break;
+                            }
+                        }
+
                         startAttemptButton.update(mousePos);
                         backToMenuButton.update(mousePos);
                         
                         if (startAttemptButton.isClicked(mousePos)) {
+                            if (selectedAttemptQuiz < 0 || selectedAttemptQuiz >= static_cast<int>(availableQuizzes.size())) {
+                                // No quiz selected
+                                state = ATTEMPT_QUIZ; // keep state
+                                break;
+                            }
+
                             string sid = studentIdInput.getValue();
                             if (sid.empty()) {
                                 sid = "S1";
@@ -341,9 +368,12 @@ int main() {
                                 s = studentManager.addOrGetStudent(s);
                             }
                             currentStudent = s;
-                            
-                            // Start quiz attempt
+
+                            // assign the chosen quiz
+                            currentQuiz = availableQuizzes[selectedAttemptQuiz];
+                            // Start quiz attempt and register it with the student (student owns attempts)
                             currentAttempt = new QuizAttempt("A1", s, currentQuiz);
+                            s->addAttempt(currentAttempt);
                             state = QUIZ_DETAILS; // Will show quiz questions
                         } else if (backToMenuButton.isClicked(mousePos)) {
                             state = MAIN_MENU;
@@ -362,15 +392,12 @@ int main() {
                                 
                                 string qid = questionIdInput.getValue();
                                 string qtext = questionTextInput.getValue();
-                                float marks = 1.0f;
-                                try {
-                                    marks = stof(marksInput.getValue());
-                                } catch (...) {}
+                                float marks = parseFloat(marksInput.getValue(), 1.0f);
                                 
                                 Question* q = nullptr;
                                 
                                 if (type == 1) { // MCQ
-                                    MCQ* m = new MCQ(qid.empty() ? "" : qid, qtext, marks);
+                                    MCQ* m = new MCQ(qid, qtext, marks);
                                     // For demo purposes, add some options
                                     m->addOption("Option 1");
                                     m->addOption("Option 2");
@@ -378,15 +405,15 @@ int main() {
                                     m->setCorrectOption(0);
                                     q = m;
                                 } else if (type == 2) { // True/False
-                                    TrueFalse* t = new TrueFalse(qid.empty() ? "" : qid, qtext, marks);
+                                    TrueFalse* t = new TrueFalse(qid, qtext, marks);
                                     t->setCorrectAnswer(true);
                                     q = t;
                                 } else if (type == 3) { // Fill in the Blank
-                                    FillInTheBlank* f = new FillInTheBlank(qid.empty() ? "" : qid, qtext, marks);
+                                    FillInTheBlank* f = new FillInTheBlank(qid, qtext, marks);
                                     f->setCorrectAnswer("Answer");
                                     q = f;
                                 } else if (type == 4) { // Numerical
-                                    NumericalQuestion* n = new NumericalQuestion(qid.empty() ? "" : qid, qtext, marks);
+                                    NumericalQuestion* n = new NumericalQuestion(qid, qtext, marks);
                                     n->setCorrectAnswer(0.0, 0.0);
                                     q = n;
                                 }
@@ -414,6 +441,8 @@ int main() {
                     quizDescInput.update(mousePos, event.mouseButton.button == sf::Mouse::Left);
                     timeLimitInput.update(mousePos, event.mouseButton.button == sf::Mouse::Left);
                 } else if (state == ATTEMPT_QUIZ) {
+                    // update quiz selection buttons
+                    for (auto& b : attemptQuizButtons) b.update(mousePos);
                     studentIdInput.update(mousePos, event.mouseButton.button == sf::Mouse::Left);
                     studentNameInput.update(mousePos, event.mouseButton.button == sf::Mouse::Left);
                     studentEmailInput.update(mousePos, event.mouseButton.button == sf::Mouse::Left);
@@ -555,10 +584,19 @@ int main() {
                 );
             }
             
-            for (auto& button : attemptQuizButtons) {
+            for (size_t bi = 0; bi < attemptQuizButtons.size(); ++bi) {
+                Button &button = attemptQuizButtons[bi];
                 button.update(mousePos);
+                // highlight selected quiz
+                if (static_cast<int>(bi) == selectedAttemptQuiz) {
+                    button.shape.setFillColor(highlightColor);
+                }
                 window.draw(button.shape);
                 window.draw(button.text);
+                // reset fill color for next frame (update will handle hover color)
+                if (static_cast<int>(bi) == selectedAttemptQuiz) {
+                    button.shape.setFillColor(sf::Color(50,50,50));
+                }
             }
             
             if (availableQuizzes.empty()) {
@@ -712,11 +750,8 @@ int main() {
         window.display();
     }
 
-    // Clean up
-    if (currentQuiz) delete currentQuiz;
-    if (currentStudent) delete currentStudent;
-    if (currentAttempt) delete currentAttempt;
-
+    // Managers own quizzes and students; Student owns attempts.
+    // No manual deletion here to avoid double-free. Let destructors run.
     return 0;
 }
 

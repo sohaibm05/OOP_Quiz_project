@@ -25,6 +25,14 @@ Quiz* QuizManager::getQuiz(size_t index) const
     return nullptr;
 }
 
+Quiz* QuizManager::getQuiz(int index) const
+{
+    if (index < 0) return nullptr;
+    size_t u = static_cast<size_t>(index);
+    if (u < quizzes.size()) return quizzes[u];
+    return nullptr;
+}
+
 size_t QuizManager::count() const 
 { 
     return quizzes.size(); 

@@ -13,9 +13,13 @@ public:
     QuizManager() = default;
     ~QuizManager();
 
+    // Manager takes ownership of `q`. The manager will delete stored quizzes
+    // in its destructor. Callers should not delete a Quiz after passing it
+    // to `addQuiz`.
     void addQuiz(Quiz* q);
     const std::vector<Quiz*>& listQuizzes() const;
     Quiz* getQuiz(size_t index) const; // returns nullptr if out of range
+    Quiz* getQuiz(int index) const; // signed-index overload for convenience
     size_t count() const;
 };
 

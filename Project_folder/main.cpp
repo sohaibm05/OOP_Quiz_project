@@ -14,6 +14,7 @@
 #include "CreateQuestion.hpp"
 #include "QuizManager.hpp"
 #include "StudentManager.hpp"
+#include "CSVQuestionLoader.hpp"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ int main() {
 
     while (true) 
     {
-        cout << "Main menu:\n 1) Create quiz\n 2) List quizzes\n 3) Attempt a quiz\n 4) Exit\n 5) List students & attempts\n 6) Find students by id" << endl;
+        cout << "Main menu:\n 1) Create quiz\n 2) List quizzes\n 3) Attempt a quiz\n 4) Exit\n 5) List students & attempts\n 6) Find students by id\n 7) Load questions from CSV" << endl;
         cout << "Your choice: ";
         string mainChoice; 
         getline(cin, mainChoice);
@@ -33,7 +34,10 @@ int main() {
         { 
             m = stoi(mainChoice); 
         } catch (...) { m = -1; }
-        if (m == 4) break;
+        if (m == 4)
+        { 
+            break;
+        }
 
         if (m == 1) 
         {
@@ -137,10 +141,8 @@ int main() {
                 idx = stoi(sel) - 1; 
             } catch (...) { idx = -1; }
 
-            size_t selIndex;
-            if (idx < 0) selIndex = static_cast<size_t>(-1);
-            else selIndex = static_cast<size_t>(idx);
-            Quiz* chosen = manager.getQuiz(selIndex);
+                if (idx < 0) { cout << "Invalid selection." << endl; continue; }
+                Quiz* chosen = manager.getQuiz(idx);
             if (!chosen) // if chosen is nullptr
             { 
                 cout << "Invalid selection." << endl; 
@@ -173,7 +175,7 @@ int main() {
             }
 
             // Create attempt and attach to student; student will own the attempt
-            QuizAttempt* attempt = new QuizAttempt("A1", s, chosen);
+            QuizAttempt* attempt = new QuizAttempt("A1", s, chosen); // s is student pointer
 
             cout << "Please answer the following questions (type the option number or your answer text):" << endl;
             for (Question* q : chosen->getQuestions()) 
@@ -248,6 +250,57 @@ int main() {
                     }
                 }
                 cout << "---" << endl;
+            }
+        }
+        else if (m == 7)
+        {
+            // Load questions from CSV
+            cout << "Enter CSV file path: ";
+            string csvPath;
+            getline(cin, csvPath);
+            if (csvPath.empty()) {
+                csvPath = "sample_questions.csv";
+            }
+            
+            cout << "Enter quiz ID for this quiz: ";
+            string qid;
+            getline(cin, qid);
+            if (qid.empty()) {
+                qid = "Quiz" + to_string(manager.count() + 1);
+            }
+            
+            cout << "Enter quiz title: ";
+            string qtitle;
+            getline(cin, qtitle);
+            if (qtitle.empty()) {
+                qtitle = "Quiz from CSV";
+            }
+            
+            cout << "Enter quiz description: ";
+            string qdesc;
+            getline(cin, qdesc);
+            if (qdesc.empty()) {
+                qdesc = "Imported from CSV";
+            }
+            
+            cout << "Enter time limit (minutes): ";
+            string tline;
+            getline(cin, tline);
+            int tlim = 30;
+            try {
+                tlim = stoi(tline);
+            } catch (...) { tlim = 30; }
+            
+            vector<Question*> questions = CSVQuestionLoader::loadFromCSV(csvPath);
+            if (!questions.empty()) {
+                Quiz* quiz = new Quiz(qid, qtitle, qdesc, tlim);
+                for (Question* q : questions) {
+                    quiz->addQuestion(q);
+                }
+                manager.addQuiz(quiz);
+                cout << "Quiz '" << qtitle << "' created with " << questions.size() << " questions." << endl;
+            } else {
+                cout << "Failed to load questions from CSV file." << endl;
             }
         }
         else if (m == 0) 

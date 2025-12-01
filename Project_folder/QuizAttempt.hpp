@@ -20,6 +20,8 @@ class QuizAttempt
         time_t endTime;
         float score;
         map<Question*, string> answers; // Question -> student's answer
+        // Non-owning pointers: QuizAttempt does not own Student or Quiz.
+        // The Student and Quiz must outlive the QuizAttempt.
         Student* student;
         Quiz* quiz;
 

@@ -1,27 +1,47 @@
 #ifndef CSVQUESTIONLOADER_HPP
 #define CSVQUESTIONLOADER_HPP
 
+#include <string>
+#include <vector>
 #include "Question.hpp"
 #include "MCQ.hpp"
 #include "TrueFalse.hpp"
 #include "FillInTheBlank.hpp"
 #include "NumericalQuestion.hpp"
-#include <vector>
-#include <string>
+
+using namespace std;
 
 class CSVQuestionLoader {
 public:
-    // Load questions from a CSV file
-    static std::vector<Question*> loadFromCSV(const std::string& filePath);
+    // Load questions from CSV file
+    // CSV Format (comma-separated):
+    // Type,QuestionID,QuestionText,Marks,CorrectAnswer,Option1,Option2,Option3,Option4
+    //
+    // Examples:
+    // MCQ,Q1,What is 2+2?,5,2,3,4,5,6
+    //   (Type=MCQ, ID=Q1, Text=What is 2+2?, Marks=5, CorrectAnswer=2 (0-based index), Options=3,4,5,6)
+    //
+    // TrueFalse,Q2,The earth is round,2,true
+    //   (Type=TrueFalse, ID=Q2, Text=The earth is round, Marks=2, CorrectAnswer=true)
+    //
+    // FillInTheBlank,Q3,Capital of France,3,Paris
+    //   (Type=FillInTheBlank, ID=Q3, Text=Capital of France, Marks=3, CorrectAnswer=Paris)
+    //
+    // Numerical,Q4,Value of pi,4,3.14159,0.01
+    //   (Type=Numerical, ID=Q4, Text=Value of pi, Marks=4, CorrectAnswer=3.14159, Tolerance=0.01)
     
+    static vector<Question*> loadFromCSV(const string& filePath);
+
 private:
-    // Helper functions for CSV parsing
-    static std::vector<std::string> splitCSV(const std::string& line);
-    static std::string trim(const std::string& str);
-    static bool tryParseInt(const std::string& str, int& out);
-    static bool tryParseFloat(const std::string& str, float& out);
-    static bool parseBool(const std::string& str);
+    static vector<string> splitCSV(const string& line); // split CSV line into fields
+    
+    static string trim(const string& str); // trim whitespace from both ends
+    
+    static bool tryParseInt(const string& str, int& out); // parse int safely
+    
+    static bool tryParseFloat(const string& str, float& out); // parse float safely
+    
+    static bool parseBool(const string& str); // simple true/false parser
 };
 
 #endif // CSVQUESTIONLOADER_HPP
-
