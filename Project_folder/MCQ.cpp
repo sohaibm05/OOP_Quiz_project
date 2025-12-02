@@ -42,3 +42,8 @@ void MCQ::displayQuestion() const
         cout << (i + 1) << ") " << options[i] << endl;
     }
 }
+
+const std::vector<std::string>& MCQ::getOptions() const
+{
+    return options;
+}

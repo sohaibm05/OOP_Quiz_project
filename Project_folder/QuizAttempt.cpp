@@ -63,3 +63,23 @@ void QuizAttempt::display() const
     }
     cout << "Answers provided: " << answers.size() << endl;
 }
+
+time_t QuizAttempt::getStartTime() const
+{
+    return startTime;
+}
+
+time_t QuizAttempt::getEndTime() const
+{
+    return endTime;
+}
+
+Quiz* QuizAttempt::getQuiz() const
+{
+    return quiz;
+}
+
+size_t QuizAttempt::getAnswersCount() const
+{
+    return answers.size();
+}

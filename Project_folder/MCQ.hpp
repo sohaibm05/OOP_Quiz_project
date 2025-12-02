@@ -18,6 +18,7 @@ class MCQ : public Question
         void setCorrectOption(int index);
         bool checkAnswer(std::string answer) const; // overridden method to check if the provided answer is correct
         void displayQuestion() const; // overriden method to display the question and options
+        const std::vector<std::string>& getOptions() const; // getter for options
 };
 
 #endif // MCQ_HPP

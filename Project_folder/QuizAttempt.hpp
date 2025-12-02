@@ -33,6 +33,12 @@ class QuizAttempt
         float getScore() const; // Get the score
         string getAttemptID() const;
         void display() const; // Display attempt details
+        
+        // Getters for SFML display
+        time_t getStartTime() const;
+        time_t getEndTime() const;
+        Quiz* getQuiz() const;
+        size_t getAnswersCount() const;
 };
 
 #endif // QUIZATTEMPT_HPP
