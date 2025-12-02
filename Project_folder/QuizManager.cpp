@@ -1,7 +1,8 @@
 #include "QuizManager.hpp"
 #include <algorithm>
 
-QuizManager::~QuizManager() {
+QuizManager::~QuizManager() 
+{
     for (Quiz* q : quizzes) delete q;
     quizzes.clear();
 }
