@@ -34,7 +34,7 @@ class QuizAttempt
         string getAttemptID() const;
         void display() const; // Display attempt details
         
-        // Getters for SFML display
+        // Accessors
         time_t getStartTime() const;
         time_t getEndTime() const;
         Quiz* getQuiz() const;

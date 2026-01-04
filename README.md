@@ -3,8 +3,7 @@
 What this project is
 - A compact quiz library and a tiny app that demonstrates it. You can run a
   console-based menu to create quizzes, attempt them, view student attempts,
-  and import questions from a CSV file. There's also an SFML-based GUI file
-  ( mainsfml.cpp ) if you want a graphical front end.
+  and import questions from a CSV file.
 
 Quick starter (what to run)
 - From PowerShell, change into  Project_folder  and compile the sources:
@@ -14,10 +13,9 @@ Quick starter (what to run)
   g++ *.o -o quiz_app.exe
   .\quiz_app.exe
 
-  Note: Don't compile both  main.cpp  and  mainsfml.cpp  into the same
+  Note: Don't compile both  main.cpp  and any other file that defines main into the same
   executable — you'll get a "multiple definition of main" error. Build the
-  console app (above) or the SFML app separately and link SFML libraries
-  when building the GUI version.
+  console app (above).
 
 What's in this folder 
 -  Question  and its subclasses: MCQ, TrueFalse, FillInTheBlank, NumericalQuestion
@@ -28,7 +26,6 @@ What's in this folder
 -  CSVQuestionLoader : a small helper that reads CSV lines and builds
    Question*  objects for supported types
 -  main.cpp : the console demo and simple menu
--  mainsfml.cpp : a graphical front-end (work-in-progress)
 
 How the pieces fit together 
 -  QuizManager  keeps quizzes. Each  Quiz  keeps the questions it contains.
